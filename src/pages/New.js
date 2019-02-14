@@ -42,17 +42,24 @@ export default class New extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <View styles={styles.header}>
+        <View style={styles.header}>
           <TouchableOpacity onPress={this.goBack}>
             <Icon name="close" size={24} color="#4BB0EE" />
           </TouchableOpacity>
-
-          <TouchableOpacity> 
-            <Text>Tweetar</Text>            
-          </TouchableOpacity>
-
           
+          <TouchableOpacity style={styles.button} onPress={this.handleTweet}>
+            <Text style={styles.buttonText}>Tweetar</Text>
+          </TouchableOpacity>
         </View>
+
+        <TextInput 
+          style={styles.input}
+          multiline
+          placeholder="O que está acontecendo?"
+          placeholderTextColor="#999"
+          value={this.state.newTweet}
+          onChangeText={this.handleInputChange}
+        />
       </SafeAreaView>
     )
   }
@@ -60,14 +67,14 @@ export default class New extends Component {
 
 const styles = StyleSheet.create({ 
   container: {
-    flex: 1, 
+    flex: 1,
     backgroundColor: "#FFF",
   },
 
   header: {
-    paddingTop: 10, 
-    paddingHorizontal: 20, 
-    flexDirection: "row", 
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingHorizontal: 20,
     justifyContent: "space-between",
     alignItems: "center"
   },
@@ -81,14 +88,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
-  buttonText: { 
-    color: "#FFF", 
+  buttonText: {
+    color: "#FFF",
     fontSize: 16,
     fontWeight: "bold"
   },
 
-  input: { 
-    margin: 20, 
+  input: {
+    margin: 20,
     fontSize: 16,
     color: "#333"
   }
