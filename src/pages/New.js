@@ -1,12 +1,59 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { Component } from 'react';
+import api from '../services/api';
+
+import { 
+  SafeAreaView, 
+  Text, 
+  TouchableOpacity, 
+  TextInput, 
+  AsyncStorage, 
+  View, 
+  StyleSheet 
+} from 'react-native'
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class New extends Component {
+  static navigationOptions = {
+    header: null 
+  }
+
+  state = {
+    newTweet: "",
+  }
+
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
+  handleTweet = async () => {
+    const content = this.state.newTweet;
+    const author = await AsyncStorage.getItem('@OmniStack:username');
+
+    await api.post('tweets', { author, content});
+
+    this.goBack();
+  }
+
+  handleInputChange = (newTweet) => {
+    this.setState({newTweet});
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <View styles={styles.header}>
+          <TouchableOpacity onPress={this.goBack}>
+            <Icon name="close" size={24} color="#4BB0EE" />
+          </TouchableOpacity>
 
-      </View>
+          <TouchableOpacity> 
+            <Text>Tweetar</Text>            
+          </TouchableOpacity>
+
+          
+        </View>
+      </SafeAreaView>
     )
   }
 }
@@ -28,7 +75,7 @@ const styles = StyleSheet.create({
   button: {
     height: 32,
     paddingHorizontal: 20,
-    borderRadius: 15,
+    borderRadius: 16,
     backgroundColor: "#4BB0EE",
     justifyContent: "center",
     alignItems: "center"
